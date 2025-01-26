@@ -1,8 +1,12 @@
+#include <iostream>
+#include <vector>
+#include <thread>
 #include <chrono>
+#include <algorithm>
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
-#include <bits/stdc++.h>
+
 using namespace std;
 
 // Function to enable non-blocking input
@@ -180,3 +184,9 @@ int main() {
 
     return 0;
 }
+
+/*
+To compile the code, run the following command:
+g++ simpleGame.cpp -o simpleGame
+./simpleGame
+*/
