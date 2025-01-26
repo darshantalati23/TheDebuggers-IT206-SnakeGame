@@ -1,5 +1,5 @@
 # IT206-SnakeGame
-### The Debuggers
+## The Debuggers
 **Team Members:**
 - Aarohi Mehta (202401002)
 - Alvita Thakor (202401012)
