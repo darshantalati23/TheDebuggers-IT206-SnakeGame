@@ -4,27 +4,41 @@
 #include <ctime>
 #include <unistd.h>
 #include <termios.h>
+#include <fcntl.h>
+
 using namespace std;
 
+// Game dimensions
+const int WIDTH = 50;
+const int HEIGHT = 25;
+
+// Directions
+enum Direction { STOP = 0, UP, DOWN, LEFT, RIGHT };
+
 // Function to capture non-blocking keypress
-char getInput() {
-    static struct termios oldt, newt;
-    char ch;
+int kbhit() {
+    struct termios oldt, newt;
+    int ch;
+    int oldf;
+    
     tcgetattr(STDIN_FILENO, &oldt);
     newt = oldt;
     newt.c_lflag &= ~(ICANON | ECHO);
     tcsetattr(STDIN_FILENO, TCSANOW, &newt);
+    oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
+    fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK);
+    
     ch = getchar();
+    
     tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-    return ch;
+    fcntl(STDIN_FILENO, F_SETFL, oldf);
+    
+    if (ch != EOF) {
+        ungetc(ch, stdin);
+        return 1;
+    }
+    return 0;
 }
-
-// Game dimensions
-const int WIDTH = 20;
-const int HEIGHT = 10;
-
-// Directions
-enum Direction { STOP = 0, UP, DOWN, LEFT, RIGHT };
 
 class SnakeGame {
 private:
@@ -71,14 +85,14 @@ public:
                 if (x == 0 || x == WIDTH + 1) {
                     cout << "#"; // Borders
                 } else if (x == headX && y == headY) {
-                    cout << "O"; // Snake head
+                    cout << "0"; // Snake head
                 } else if (x == fruitX && y == fruitY) {
                     cout << "F"; // Fruit
                 } else {
                     bool isBody = false;
                     for (auto &segment : snake) {
                         if (segment.first == x && segment.second == y) {
-                            cout << "o";
+                            cout << "O";
                             isBody = true;
                             break;
                         }
@@ -98,34 +112,21 @@ public:
     }
 
     void input() {
-        if (cin.rdbuf()->in_avail() > 0) {
-            char key = getInput();
+        if (kbhit()) {
+            char key = getchar();
             switch (key) {
-                case 'w':
-                case 'W':
-                    if (dir != DOWN) dir = UP;
-                    break;
-                case 's':
-                case 'S':
-                    if (dir != UP) dir = DOWN;
-                    break;
-                case 'a':
-                case 'A':
-                    if (dir != RIGHT) dir = LEFT;
-                    break;
-                case 'd':
-                case 'D':
-                    if (dir != LEFT) dir = RIGHT;
-                    break;
-                case 'x':
-                case 'X':
-                    gameOver = true;
-                    break;
+                case 'w': case 'W': if (dir != DOWN) dir = UP; break;
+                case 's': case 'S': if (dir != UP) dir = DOWN; break;
+                case 'a': case 'A': if (dir != RIGHT) dir = LEFT; break;
+                case 'd': case 'D': if (dir != LEFT) dir = RIGHT; break;
+                case 'x': case 'X': gameOver = true; break;
             }
         }
     }
 
     void logic() {
+        if (dir == STOP) return; // Don't move if no direction is given
+        
         // Move the body
         for (int i = snake.size() - 1; i > 0; i--) {
             snake[i] = snake[i - 1];
@@ -164,7 +165,7 @@ public:
             draw();
             input();
             logic();
-            usleep(150000); // Slow the game loop
+            usleep(100000); // Slow the game loop
         }
         cout << "Game Over! Final Score: " << score << endl;
     }
