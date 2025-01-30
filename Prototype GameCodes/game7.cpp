@@ -20,8 +20,8 @@ using namespace std;
 #define COLOR_BOLD    "\033[1m"
 
 // Game dimensions
-const int WIDTH = 60;
-const int HEIGHT = 30;
+const int WIDTH = 40;
+const int HEIGHT = 20;
 
 // Directions
 enum Direction { STOP = 0, UP, DOWN, LEFT, RIGHT };
