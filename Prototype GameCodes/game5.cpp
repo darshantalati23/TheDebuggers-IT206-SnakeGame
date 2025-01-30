@@ -146,9 +146,9 @@ public:
                 } else if (x == head->x && y == head->y) {
                     cout << "●"; // Snake head
                 } else if (x == fruitX && y == fruitY) {
-                    cout << "🍎"; // Fruit
+                    cout << "F"; // Fruit
                 } else if (isObstacle(x, y)) {
-                    cout << "🚧"; // Obstacle
+                    cout << "#"; // Obstacle
                 } else {
                     bool isBody = false;
                     for (Node* temp = head->next; temp; temp = temp->next) {

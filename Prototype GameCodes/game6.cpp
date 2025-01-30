@@ -9,14 +9,11 @@
 
 using namespace std;
 
-// Game dimensions
 const int WIDTH = 50;
 const int HEIGHT = 25;
 
-// Directions
 enum Direction { STOP = 0, UP, DOWN, LEFT, RIGHT };
 
-// Function to capture non-blocking keypress
 int kbhit() {
     struct termios oldt, newt;
     int ch;
@@ -50,6 +47,7 @@ struct Node {
 class SnakeGame {
 private:
     bool gameOver;
+    bool gameStarted;
     Node* head;
     Node* tail;
     int fruitX, fruitY;
@@ -69,7 +67,7 @@ private:
 
     void spawnObstacles() {
         obstacles.clear();
-        int numObstacles = 5 + rand() % 10; // Random number of obstacles
+        int numObstacles = 5 + rand() % 10;
         for (int i = 0; i < numObstacles; i++) {
             int x, y;
             do {
@@ -114,11 +112,12 @@ public:
 
     void resetGame() {
         gameOver = false;
+        gameStarted = false;
         dir = STOP;
         score = 0;
         speed = 150000;
 
-        clearSnake(); // Clear existing snake before resetting
+        clearSnake();
 
         head = new Node(WIDTH / 2, HEIGHT / 2);
         tail = head;
@@ -129,13 +128,11 @@ public:
 
         spawnFruit();
         spawnObstacles();
-        startTime = chrono::steady_clock::now();
     }
 
     void draw() {
         system("clear");
 
-        // Top border
         for (int i = 0; i < WIDTH + 2; i++) cout << "▓";
         cout << endl;
 
@@ -144,16 +141,16 @@ public:
                 if (x == 0 || x == WIDTH + 1) {
                     cout << "▓";
                 } else if (x == head->x && y == head->y) {
-                    cout << "●"; // Snake head
+                    cout << "●";
                 } else if (x == fruitX && y == fruitY) {
-                    cout << "🍎"; // Fruit
+                    cout << "F";
                 } else if (isObstacle(x, y)) {
-                    cout << "🚧"; // Obstacle
+                    cout << "#";
                 } else {
                     bool isBody = false;
                     for (Node* temp = head->next; temp; temp = temp->next) {
                         if (temp->x == x && temp->y == y) {
-                            cout << "○"; // Snake body
+                            cout << "○";
                             isBody = true;
                             break;
                         }
@@ -167,10 +164,13 @@ public:
         for (int i = 0; i < WIDTH + 2; i++) cout << "▓";
         cout << endl;
 
-        // Display score, time, and max score
-        auto now = chrono::steady_clock::now();
-        int elapsedTime = chrono::duration_cast<chrono::seconds>(now - startTime).count();
-        cout << "Score: " << score << " | Time: " << elapsedTime << "s | Max Score: " << maxScore << endl;
+        if (gameStarted) {
+            auto now = chrono::steady_clock::now();
+            int elapsedTime = chrono::duration_cast<chrono::seconds>(now - startTime).count();
+            cout << "Score: " << score << " | Time: " << elapsedTime << "s | Max Score: " << maxScore << endl;
+        } else {
+            cout << "Score: 0 | Press WASD to start! | Max Score: " << maxScore << endl;
+        }
         cout << "Use W/A/S/D to move. Press X to quit." << endl;
     }
 
@@ -178,10 +178,34 @@ public:
         if (kbhit()) {
             char key = getchar();
             switch (key) {
-                case 'w': case 'W': if (dir != DOWN) dir = UP; break;
-                case 's': case 'S': if (dir != UP) dir = DOWN; break;
-                case 'a': case 'A': if (dir != RIGHT) dir = LEFT; break;
-                case 'd': case 'D': if (dir != LEFT) dir = RIGHT; break;
+                case 'w': case 'W': 
+                    if (!gameStarted) {
+                        gameStarted = true;
+                        startTime = chrono::steady_clock::now();
+                    }
+                    if (dir != DOWN) dir = UP; 
+                    break;
+                case 's': case 'S': 
+                    if (!gameStarted) {
+                        gameStarted = true;
+                        startTime = chrono::steady_clock::now();
+                    }
+                    if (dir != UP) dir = DOWN; 
+                    break;
+                case 'a': case 'A': 
+                    if (!gameStarted) {
+                        gameStarted = true;
+                        startTime = chrono::steady_clock::now();
+                    }
+                    if (dir != RIGHT) dir = LEFT; 
+                    break;
+                case 'd': case 'D': 
+                    if (!gameStarted) {
+                        gameStarted = true;
+                        startTime = chrono::steady_clock::now();
+                    }
+                    if (dir != LEFT) dir = RIGHT; 
+                    break;
                 case 'x': case 'X': gameOver = true; break;
             }
         }
@@ -235,11 +259,26 @@ public:
                 usleep(speed);
             }
             maxScore = max(maxScore, score);
+            
+            // Clear input buffer
+            while (kbhit()) getchar();
+            
+            // Game over loop
             cout << "Game Over! Score: " << score << endl;
             cout << "Press R to restart or X to quit: ";
-            char choice;
-            cin >> choice;
-            if (choice != 'r' && choice != 'R') break;
+            fflush(stdout);
+            
+            while (true) {
+                if (kbhit()) {
+                    char choice = getchar();
+                    if (choice == 'r' || choice == 'R') {
+                        break;
+                    } else if (choice == 'x' || choice == 'X') {
+                        return;
+                    }
+                }
+                usleep(100000);
+            }
         }
     }
 };
