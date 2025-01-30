@@ -48,9 +48,10 @@ private:
     int fruitX, fruitY;
     Direction dir;
     int score;
+    int maxScore;
 
 public:
-    SnakeGame() {
+    SnakeGame() : maxScore(0) {
         resetGame();
     }
 
@@ -108,6 +109,7 @@ public:
         cout << endl;
 
         cout << "Score: " << score << endl;
+        cout << "Max Score: " << maxScore << endl;
         cout << "Use W/A/S/D to move. Press X to quit." << endl;
     }
 
@@ -160,14 +162,39 @@ public:
         }
     }
 
-    void run() {
-        while (!gameOver) {
-            draw();
-            input();
-            logic();
-            usleep(100000); // Slow the game loop
+    void gameOverScreen() {
+        if (score > maxScore) {
+            maxScore = score;
         }
-        cout << "Game Over! Final Score: " << score << endl;
+        cout << "Game Over!" << endl;
+        cout << "Final Score: " << score << endl;
+        cout << "Max Score: " << maxScore << endl;
+        cout << "Press R to restart or Q to quit." << endl;
+    }
+
+    void run() {
+        while (true) {
+            while (!gameOver) {
+                draw();
+                input();
+                logic();
+                usleep(150000); // Slow the game loop
+            }
+            gameOverScreen();
+
+            // Wait for user input to restart or quit
+            while (true) {
+                if (kbhit()) {
+                    char key = getchar();
+                    if (key == 'r' || key == 'R') {
+                        resetGame();
+                        break;
+                    } else if (key == 'q' || key == 'Q') {
+                        return;
+                    }
+                }
+            }
+        }
     }
 };
 
