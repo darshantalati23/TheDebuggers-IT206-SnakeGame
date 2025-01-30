@@ -1,0 +1,55 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+      {
+        "label": "Compile and run",
+        "type": "shell",
+        "command": "",
+        "args": [
+          "cp",
+          "\"${file}\"",
+          "${workspaceFolder}/jspwTest.cpp",
+          "&&",
+          "g++",
+          "jspwTest.cpp",
+          "-o",
+          "jspwTest",
+          "&&",
+          "./jspwTest",
+          "<",
+          "input.txt",
+          ">",
+          "output.txt",
+          "&&",
+          "rm",
+          "jspwTest",
+          "&&",
+          "rm",
+          "jspwTest.cpp"
+        ],
+        "presentation": {
+          "reveal": "never"
+        },
+        "group": {
+          "kind": "build",
+          "isDefault": true
+        },
+        "problemMatcher": {
+          "owner": "cpp",
+          "fileLocation": [
+            "relative",
+            "${workspaceFolder}"
+          ],
+          "pattern": {
+            "regexp": "^(.*):(\\d+):(\\d+):\\s+(warning|error):\\s+(.*)$",
+            "file": 1,
+            "line": 2,
+            "column": 3,
+            "severity": 4,
+            "message": 5
+          }
+        }
+      }
+    ]
+  }
+  
