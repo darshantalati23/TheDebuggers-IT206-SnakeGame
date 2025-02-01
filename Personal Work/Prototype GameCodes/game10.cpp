@@ -89,7 +89,7 @@ private:
             newFruit.y = rand() % HEIGHT;
             if (!isObstacle(newFruit.x, newFruit.y) && !isSnakeBody(newFruit.x, newFruit.y)) {
                 int chance = rand() % 100;
-                newFruit.type = (chance < 20) ? SLOW : NORMAL; // 20% green, 80% red
+                newFruit.type = (chance < 15) ? SLOW : NORMAL; // 20% green, 80% red
                 fruits.push_back(newFruit);
                 return;
             }
@@ -307,7 +307,7 @@ public:
             if (it->x == newX && it->y == newY) {
                 if (it->type == NORMAL) {
                     score += 10;
-                    speed = max(50000, speed - 5000);
+                    speed = max(45000, speed - 15000);
                 } else {
                     score += 5;
                     speed = min(300000, speed + 10000);
@@ -349,7 +349,7 @@ public:
                 }
                 int adjusted_speed = speed;
                 if (dir == UP || dir == DOWN) {
-                    adjusted_speed = (speed*5)/4;
+                    adjusted_speed = (speed*3)/2;
                 }
                 usleep(adjusted_speed);
             }
