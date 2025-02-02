@@ -6,4 +6,4 @@
 - Darshan Talati (202401046)
 - Dharmesh Upadhyay (202401049)
 
-![Alt Text](Personal Work/ReadME/GroupIcon.jpg)
+![Alt Text](https://github.com/darshantalati23/IT206-SnakeGame/tree/main/Personal%20Work/ReadME)
