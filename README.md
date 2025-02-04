@@ -39,7 +39,6 @@ Built using C++ with ANSI escape codes for terminal graphics and real-time keybo
 
 
 ### 🕹️ Usage
-
 ### Installation & Running (Ubuntu)
 1. **Install Dependencies**:
    ```bash
