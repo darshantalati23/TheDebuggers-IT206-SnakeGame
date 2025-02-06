@@ -14,7 +14,7 @@
   - [Installation & Running](#installation--running)
   - [How to Play](#how-to-play)
 - [Credits](#-credits)
-- [Documentation](#-documentation)
+- [Contributing](#-contributing)
 - [License](#-license)
 
 
@@ -60,6 +60,6 @@ Built using C++ with ANSI escape codes for terminal graphics and real-time keybo
 This project is not licensed. All rights reserved.
 
 
-### Acknowledgements
+### Credits
 The game's design was inspired by the tutorial on [ ].
 Thanks to Chatgpt for providing helpful resources for making the basic idea of the snake game.
