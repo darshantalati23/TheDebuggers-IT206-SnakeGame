@@ -52,7 +52,7 @@ Built using C++ with ANSI escape codes for terminal graphics and real-time keybo
 ![](GroupIcon.jpg)
 
 
-###Contributing
+### Contributing
 We welcome contributions! Please refer to the following steps to contribute:
 
 -Fork the repo
