@@ -36,6 +36,7 @@ Built using C++ with ANSI escape codes for terminal graphics and real-time keybo
 - **Adaptive Difficulty**: Speed increases with score
 - **Player Stats**: Name, score, time, and max score tracking
 - **Pause/Restart** functionality
+- **Directions/Movements** move the snake with the keys w/s/a/d
 
 
 ### 🕹️ Usage
