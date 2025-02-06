@@ -50,3 +50,16 @@ Built using C++ with ANSI escape codes for terminal graphics and real-time keybo
 
 
 ![](GroupIcon.jpg)
+
+
+### Contributing
+
+
+
+### License 
+This project is not licensed. All rights reserved.
+
+
+### Acknowledgements
+The game's design was inspired by the tutorial on [ ].
+Thanks to Chatgpt for providing helpful resources for making the basic idea of the snake game.
