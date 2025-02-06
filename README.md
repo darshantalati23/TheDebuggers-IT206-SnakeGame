@@ -13,9 +13,9 @@
 - [Usage](#-usage)
   - [Installation & Running](#installation--running)
   - [How to Play](#how-to-play)
-- [Credits](#-credits)
-- [Contributing](#-contributing)
-- [License](#-license)
+- [Credits](#credits)
+- [Contributing](#contributing)
+- [License](#license)
 
 
 ### 🚀 Description
@@ -52,8 +52,13 @@ Built using C++ with ANSI escape codes for terminal graphics and real-time keybo
 ![](GroupIcon.jpg)
 
 
-### Contributing
+###Contributing
+We welcome contributions! Please refer to the following steps to contribute:
 
+-Fork the repo
+-Create a new branch
+-Push your changes
+-Open a pull request
 
 
 ### License 
