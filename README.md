@@ -1,10 +1,10 @@
 # Classic Snake Game
 ## The Debuggers
 ### Team Members
-##### - Aarohi Mehta (202401002)
-##### - Alvita Thakor (202401012)
-##### - Darshan Talati (202401046)
-##### - Dharmesh Upadhyay (202401049)
+##### _- Aarohi Mehta (202401002)_
+##### _- Alvita Thakor (202401012)_
+##### _- Darshan Talati (202401046)_
+##### _- Dharmesh Upadhyay (202401049)_
 
 
 ### Table of Contents
