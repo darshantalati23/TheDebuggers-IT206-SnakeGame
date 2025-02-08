@@ -34,10 +34,10 @@ It has the following features:
 
 #### Installation & Running (Ubuntu)
   - Install the required compiler (if not installed):
-    <pre>```sudo apt install g++```</pre>
+    <pre>sudo apt install g++</pre>
   - Compile and Run the Game:
-    <pre>```theSnakeGame.cpp -o theSnakeGame```
-    ```./theSnakeGame```</pre>
+    <pre>theSnakeGame.cpp -o theSnakeGame
+    ./theSnakeGame</pre>
 
 #### How to Play
 - The game starts with a snake of length 3 (--O).
