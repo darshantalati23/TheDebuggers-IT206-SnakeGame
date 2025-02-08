@@ -64,7 +64,7 @@ This project is not licensed. All rights reserved.
 The game's design was inspired by the youtube tutorials:
 - [Snake Game by Ertjan Arapi](https://youtu.be/gWq0tJLsjRs?si=GyGW5fCuE8hOVNki)
 - [Snake Game by NVitanovic](https://www.youtube.com/watch?v=E_-lMZDi7Uw)
-Thanks to ChatGPT DeepSeek for providing helpful recommedations, resources and tips for making the basic idea of the snake game.
+<br/>Thanks to ChatGPT DeepSeek for providing helpful recommedations, resources and tips for making the basic idea of the snake game.
 
 
 ### 😉 Group Icon
