@@ -60,7 +60,7 @@ Built using C++ with ANSI escape codes for terminal graphics and real-time keybo
 ### 🤝 Contributors
 The game was built and improved with contributions from:
 
-*Aarohi & Alvita*: Implemented the snake movement and logic.
+*Aarohi & Alvita*: Implemented the snake movement and logic.<br/>
 *Darshan & Dharmesh*: Implemented the fruit spawning and game board logic.
 **All** worked on gameplay updates and optimization.
 
