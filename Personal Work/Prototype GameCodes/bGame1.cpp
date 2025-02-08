@@ -1,198 +1,157 @@
 #include <iostream>
-#include <vector>
 #include <cstdlib>
 #include <ctime>
-#include <unistd.h>
-#include <termios.h>
-#include <fcntl.h>
-
+#include <string>
 using namespace std;
 
-const int WIDTH = 50;
-const int HEIGHT = 25;
+const int WIDTH = 20;
+const int HEIGHT = 20;
 
-enum Direction { STOP = 0, UP, DxOWN, LEFT, RIGHT };
+struct SnakeNode {
+    int x;
+    int y;
+    char symbol;
+    SnakeNode* next;
+    SnakeNode(int xPos, int yPos, char s, SnakeNode* n = nullptr)
+        : x(xPos), y(yPos), symbol(s), next(n) {}
+};
 
-int kbhit() {
-    struct termios oldt, newt;
-    int ch;
-    int oldf;
-    
-    tcgetattr(STDIN_FILENO, &oldt);
-    newt = oldt;
-    newt.c_lflag &= ~(ICANON | ECHO);
-    tcsetattr(STDIN_FILENO, TCSANOW, &newt);
-    oldf = fcntl(STDIN_FILENO, F_GETFL, 0);
-    fcntl(STDIN_FILENO, F_SETFL, oldf | O_NONBLOCK);
-    
-    ch = getchar();
-    
-    tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
-    fcntl(STDIN_FILENO, F_SETFL, oldf);
-    
-    if (ch != EOF) {
-        ungetc(ch, stdin);
-        return 1;
-    }
-    return 0;
-}
+SnakeNode* head = nullptr;
+SnakeNode* tail = nullptr;
+int fruitX, fruitY;
+int score = 0;
+bool gameOver = false;
 
-class SnakeGame {
-private:
-    bool gameOver;
-    int headX, headY;
-    vector<pair<int, int>> snake;
-    int fruitX, fruitY;
-    Direction dir;
-    int score;
-    int maxScore;
-
-public:
-    SnakeGame() : maxScore(0) {
-        resetGame();
-    }
-
-    void resetGame() {
-        gameOver = false;
-        dir = STOP;
-        headX = WIDTH / 2;
-        headY = HEIGHT / 2;
-        snake = {{headX, headY}, {headX - 1, headY}, {headX - 2, headY}};
-        score = 0;
-        spawnFruit();
-    }
-
-    void spawnFruit() {
+void generateFruit() {
+    bool valid = false;
+    do {
         fruitX = rand() % WIDTH;
         fruitY = rand() % HEIGHT;
-    }
-
-    void draw() {
-        system("clear");
-
-        for (int i = 0; i < WIDTH + 2; i++) cout << "#";
-        cout << endl;
-
-        for (int y = 0; y < HEIGHT; y++) {
-            for (int x = 0; x < WIDTH + 2; x++) {
-                if (x == 0 || x == WIDTH + 1) {
-                    cout << "#";
-                } else if (x == headX && y == headY) {
-                    cout << "0";
-                } else if (x == fruitX && y == fruitY) {
-                    cout << "F";
-                } else {
-                    bool isBody = false;
-                    for (auto &segment : snake) {
-                        if (segment.first == x && segment.second == y) {
-                            cout << "O";
-                            isBody = true;
-                            break;
-                        }
-                    }
-                    if (!isBody) {
-                        // Draw grid lines every 5 units
-                        if ((x - 1) % 5 == 0 || y % 5 == 0) {
-                            cout << ".";  // Grid point
-                        } else {
-                            cout << " ";
-                        }
-                    }
-                }
+        valid = true;
+        SnakeNode* current = head;
+        while (current != nullptr) {
+            if (current->x == fruitX && current->y == fruitY) {
+                valid = false;
+                break;
             }
-            cout << endl;
+            current = current->next;
         }
+    } while (!valid);
+}
 
-        for (int i = 0; i < WIDTH + 2; i++) cout << "#";
-        cout << endl;
-
-        cout << "Score: " << score << endl;
-        cout << "Max Score: " << maxScore << endl;
-        cout << "Use W/A/S/D to move. Press X to quit." << endl;
-    }
-
-    void input() {
-        if (kbhit()) {
-            char key = getchar();
-            switch (key) {
-                case 'w': case 'W': if (dir != DOWN) dir = UP; break;
-                case 's': case 'S': if (dir != UP) dir = DOWN; break;
-                case 'a': case 'A': if (dir != RIGHT) dir = LEFT; break;
-                case 'd': case 'D': if (dir != LEFT) dir = RIGHT; break;
-                case 'x': case 'X': gameOver = true; break;
-            }
-        }
-    }
-
-    void logic() {
-        if (dir == STOP) return;
-        
-        for (int i = snake.size() - 1; i > 0; i--) {
-            snake[i] = snake[i - 1];
-        }
-
-        if (dir == UP) headY--;
-        else if (dir == DOWN) headY++;
-        else if (dir == LEFT) headX--;
-        else if (dir == RIGHT) headX++;
-
-        snake[0] = {headX, headY};
-
-        if (headX < 0 || headX >= WIDTH || headY < 0 || headY >= HEIGHT) {
-            gameOver = true;
-        }
-
-        for (size_t i = 1; i < snake.size(); i++) {
-            if (snake[i].first == headX && snake[i].second == headY) {
-                gameOver = true;
-            }
-        }
-
-        if (headX == fruitX && headY == fruitY) {
-            score += 10;
-            snake.push_back({-1, -1});
-            spawnFruit();
-        }
-    }
-
-    void gameOverScreen() {
-        if (score > maxScore) {
-            maxScore = score;
-        }
-        cout << "Game Over!" << endl;
-        cout << "Final Score: " << score << endl;
-        cout << "Max Score: " << maxScore << endl;
-        cout << "Press R to restart or Q to quit." << endl;
-    }
-
-    void run() {
-        while (true) {
-            while (!gameOver) {
-                draw();
-                input();
-                logic();
-                usleep(150000);
-            }
-            gameOverScreen();
-
-            while (true) {
-                if (kbhit()) {
-                    char key = getchar();
-                    if (key == 'r' || key == 'R') {
-                        resetGame();
+void displayGrid() {
+    system("cls"); // Use "clear" for Unix-based systems
+    for (int y = 0; y < HEIGHT; y++) {
+        for (int x = 0; x < WIDTH; x++) {
+            if (x == fruitX && y == fruitY) {
+                cout << 'F';
+            } else {
+                bool isSnakePart = false;
+                SnakeNode* current = head;
+                while (current != nullptr) {
+                    if (current->x == x && current->y == y) {
+                        cout << current->symbol;
+                        isSnakePart = true;
                         break;
-                    } else if (key == 'q' || key == 'Q') {
-                        return;
                     }
+                    current = current->next;
+                }
+                if (!isSnakePart) {
+                    cout << ' ';
                 }
             }
         }
+        cout << endl;
     }
-};
+}
 
 int main() {
     srand(time(0));
-    SnakeGame game;
-    game.run();
+
+    // Initialize snake with length 3: "--O"
+    head = new SnakeNode(5, 10, 'O');
+    head->next = new SnakeNode(4, 10, '-');
+    head->next->next = new SnakeNode(3, 10, '-');
+    tail = head->next->next;
+
+    generateFruit();
+
+    while (!gameOver) {
+        displayGrid();
+        cout << "Score: " << score << endl;
+
+        string input;
+        getline(cin, input);
+        if (input.empty()) {
+            continue;
+        }
+        char dir = toupper(input[0]);
+
+        int newX = head->x;
+        int newY = head->y;
+        switch (dir) {
+            case 'W': newY--; break;
+            case 'S': newY++; break;
+            case 'A': newX--; break;
+            case 'D': newX++; break;
+            default: 
+                cout << "Invalid direction. Use WASD." << endl;
+                continue;
+        }
+
+        // Check wall collision
+        if (newX < 0 || newX >= WIDTH || newY < 0 || newY >= HEIGHT) {
+            gameOver = true;
+            break;
+        }
+
+        // Check self collision
+        SnakeNode* current = head;
+        bool collision = false;
+        while (current != nullptr) {
+            if (current->x == newX && current->y == newY) {
+                collision = true;
+                break;
+            }
+            current = current->next;
+        }
+        if (collision) {
+            gameOver = true;
+            break;
+        }
+
+        bool ateFruit = (newX == fruitX && newY == fruitY);
+
+        // Create new head and update previous head to body
+        SnakeNode* newHead = new SnakeNode(newX, newY, 'O');
+        newHead->next = head;
+        head = newHead;
+        head->next->symbol = '-';
+
+        if (ateFruit) {
+            score += 10;
+            generateFruit();
+        } else {
+            // Remove tail
+            SnakeNode* prev = head;
+            while (prev->next != tail) {
+                prev = prev->next;
+            }
+            delete tail;
+            tail = prev;
+            tail->next = nullptr;
+        }
+    }
+
+    cout << "Game Over! Final Score: " << score << endl;
+
+    // Clean up linked list
+    SnakeNode* current = head;
+    while (current != nullptr) {
+        SnakeNode* temp = current;
+        current = current->next;
+        delete temp;
+    }
+
     return 0;
 }
