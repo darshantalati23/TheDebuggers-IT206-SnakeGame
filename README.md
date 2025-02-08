@@ -74,4 +74,4 @@ Thanks to Chatgpt for providing helpful resources for making the basic idea of t
 
 
 ### 😉 Group Icon
-<img src="GroupIcon.jpg" width="250px">
+<img src="GroupIcon.jpg" width="300px">
