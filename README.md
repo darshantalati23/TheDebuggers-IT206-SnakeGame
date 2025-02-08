@@ -1,10 +1,10 @@
 # Classic Snake Game
 ## The Debuggers
 ### Team Members
-###### - Aarohi Mehta (202401002)
-###### - Alvita Thakor (202401012)
-###### - Darshan Talati (202401046)
-###### - Dharmesh Upadhyay (202401049)
+##### - Aarohi Mehta (202401002)
+##### - Alvita Thakor (202401012)
+##### - Darshan Talati (202401046)
+##### - Dharmesh Upadhyay (202401049)
 
 
 ### Table of Contents
@@ -64,7 +64,7 @@ This project is not licensed. All rights reserved.
 The game's design was inspired by the youtube tutorials:
 - [Snake Game by Ertjan Arapi](https://youtu.be/gWq0tJLsjRs?si=GyGW5fCuE8hOVNki)
 - [Snake Game by NVitanovic](https://www.youtube.com/watch?v=E_-lMZDi7Uw)
-<br/>Thanks to ChatGPT DeepSeek for providing helpful recommedations, resources and tips for making the basic idea of the snake game.
+<br/>Thanks to ChatGPT & DeepSeek for providing helpful recommedations, resources and tips for making the basic idea of the snake game.
 
 
 ### 😉 Group Icon
