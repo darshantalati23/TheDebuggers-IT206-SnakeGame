@@ -8,8 +8,7 @@
 
 
 ### Table of Contents
-- [Description](#-description)
-- [Features](#-features)
+- [Description & Features](#-description--features)
 - [Usage](#️-usage)
   - [Installation & Running](#installation--running-ubuntu)
   - [How to Play](#how-to-play)
@@ -18,18 +17,10 @@
 - [Credits](#-credits)
 
 
-### 🚀 Description
-A terminal-based implementation of the classic Snake game with modern features:
-- Dynamic obstacles
-- Speed-modifying fruits (red/green)
-- Score tracking with time-based metrics
-- Customizable gameplay (name input, obstacle toggle)
-
-Built using C++ with ANSI escape codes for terminal graphics and real-time keyboard input handling.
-
-
-### ✨ Features
-- **Obstacle System**: Randomly generated barriers
+### ✨ Description & Features
+A terminal-based implementation of the classic Snake game. A snake moves on the board to eat fruits and grows in length.
+It has the following features:
+- **Obstacle System**: Randomly generated barriers, if user wants them.
 - **Colored Fruits**: 
   - 🔴 Red: +10 pts, increases speed
   - 🟢 Green: +5 pts, decreases speed
@@ -38,16 +29,17 @@ Built using C++ with ANSI escape codes for terminal graphics and real-time keybo
 - **Pause/Restart** functionality
 - **Directions/Movements** move the snake with the keys w/s/a/d
 
+
 ### 🕹️ Usage
 
-##### Installation & Running (Ubuntu)
+#### Installation & Running (Ubuntu)
   - Install the required compiler (if not installed):
     <pre>```sudo apt install g++```</pre>
   - Compile and Run the Game:
     <pre>```theSnakeGame.cpp -o theSnakeGame```
     ```./theSnakeGame```</pre>
 
-##### How to Play
+#### How to Play
 - The game starts with a snake of length 3 (--O).
 - Use WASD keys to control the snake's movement.
 - Eat fruits (F) to grow and score points.
@@ -61,7 +53,7 @@ Built using C++ with ANSI escape codes for terminal graphics and real-time keybo
 The game was built and improved with contributions from:
 
 *Aarohi & Alvita*: Implemented the snake movement and logic.<br/>
-*Darshan & Dharmesh*: Implemented the fruit spawning and game board logic.
+*Darshan & Dharmesh*: Implemented the fruit spawning and game board logic.<br/>
 **All** worked on gameplay updates and optimization.
 
 ### 📜 License
