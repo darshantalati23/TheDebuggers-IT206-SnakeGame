@@ -42,10 +42,10 @@ Built using C++ with ANSI escape codes for terminal graphics and real-time keybo
 
 ##### Installation & Running (Ubuntu)
   - Install the required compiler (if not installed):
-    ```sudo apt install g++```
+    <pre>```sudo apt install g++```</pre>
   - Compile and Run the Game:
-    <pre>```theSnakeGame.cpp -o theSnakeGame```</pre>
-    <pre>```./theSnakeGame```</pre>
+    <pre>```theSnakeGame.cpp -o theSnakeGame```
+    ```./theSnakeGame```</pre>
 
 ##### How to Play
 - The game starts with a snake of length 3 (--O).
