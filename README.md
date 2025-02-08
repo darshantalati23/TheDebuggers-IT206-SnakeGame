@@ -68,4 +68,4 @@ Thanks to ChatGPT DeepSeek for providing helpful recommedations, resources and t
 
 
 ### 😉 Group Icon
-<img src="GroupIcon.jpg" width="300px">
+<img src="GroupIcon.jpg" width="350px">
