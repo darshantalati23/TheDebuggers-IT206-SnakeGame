@@ -42,10 +42,10 @@ Built using C++ with ANSI escape codes for terminal graphics and real-time keybo
 
 ##### Installation & Running (Ubuntu)
   - Install the required compiler (if not installed):
-    `sudo apt install g++`
+    ```sudo apt install g++```
   - Compile and Run the Game:
-    `theSnakeGame.cpp -o theSnakeGame`
-    `./theSnakeGame`
+    ```theSnakeGame.cpp -o theSnakeGame```
+    ```./theSnakeGame```
 
 ##### How to Play
 - The game starts with a snake of length 3 (--O).
@@ -63,7 +63,6 @@ The game was built and improved with contributions from:
 *Aarohi & Alvita*: Implemented the snake movement and logic.
 *Darshan & Dharmesh*: Implemented the fruit spawning and game board logic.
 **All** worked on gameplay updates and optimization.
-
 
 ### 📜 License
 This project is not licensed. All rights reserved.
